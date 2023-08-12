@@ -21,6 +21,8 @@ export default class Bullet extends Physics.Arcade.Sprite {
     this.getBody().setVelocity(0, -300);
   }
 
+  // public stop(): void {}
+
   public update(): void {
     if (this.y < -50) {
       // 这两个方法是用来处理当前sprite的激活状态和显示隐藏状态的
@@ -30,10 +32,10 @@ export default class Bullet extends Physics.Arcade.Sprite {
     }
   }
 
-  public destroy(): void {
-    this.setActive(false);
-    this.setVisible(false);
-  }
+  // public destroy(): void {
+  //   this.setActive(false);
+  //   this.setVisible(false);
+  // }
 
   protected getBody(): Physics.Arcade.Body {
     return this.body as Physics.Arcade.Body;

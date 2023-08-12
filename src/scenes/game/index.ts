@@ -5,7 +5,11 @@ import Plane from "../../classes/plane";
 import Bullet from "../../classes/bullet";
 // import { Enemy } from "../../classes/enemy";
 import Enemy from "../../classes/enemy2";
-
+import { EVENTS_NAME, GameStatus } from "../../consts";
+type iSound =
+  | Phaser.Sound.NoAudioSound
+  | Phaser.Sound.HTML5AudioSound
+  | Phaser.Sound.WebAudioSound;
 export class GameScene extends Scene {
   private player!: Player;
   private plane!: Plane;
@@ -24,12 +28,36 @@ export class GameScene extends Scene {
   private enemies2!: GameObjects.Group;
   private enemies3!: GameObjects.Group;
   private enemyBeforeTime = 0;
+  private status = GameStatus.PLAYING;
+  private pi!: iSound;
+  private crash!: iSound;
 
   constructor() {
     super("game-scene");
   }
 
+  private gameStop(): void {
+    this.status = GameStatus.PAUSE;
+    this.bullets.getChildren().forEach((item) => {
+      console.log("item", item);
+      (item as Bullet).stop();
+    });
+    this.game.events.emit(EVENTS_NAME.gameEnd, GameStatus.PAUSE);
+  }
+
   create(props: any): void {
+    this.game.events.on(
+      EVENTS_NAME.gameEnd,
+      (status: any) => {
+        this.status = status;
+      },
+      this
+    );
+
+    const ao = this.sound.add("ao");
+    this.pi = this.sound.add("pi");
+    this.crash = this.sound.add("crash3");
+
     const width = this.game.scale.width;
     const height = this.game.scale.height;
     // console.log("width", width);
@@ -58,6 +86,7 @@ export class GameScene extends Scene {
       runChildUpdate: true,
     });
 
+    const self = this;
     ["enemies1", "enemies2", "enemies3"].forEach((item) => {
       this.physics.add.overlap(
         this.bullets,
@@ -65,6 +94,8 @@ export class GameScene extends Scene {
         function (bullet, enemy) {
           bullet.destroy();
           enemy.destroy();
+          self.crash.play();
+          self.game.events.emit(EVENTS_NAME.shoot);
         },
         undefined,
         this
@@ -75,6 +106,9 @@ export class GameScene extends Scene {
         function (plane, enemy) {
           console.log("plane attach", plane);
           plane.destroy();
+          self.gameStop();
+          self.game.events.emit(EVENTS_NAME.planeAttack);
+          ao.play();
           // bullet.destroy();
           // enemy.destroy();
         },
@@ -131,16 +165,20 @@ export class GameScene extends Scene {
     this.bg.tilePositionY -= 1;
 
     // this.plane.update();
-    if (time - this.beforeTime > 100) {
+    if (this.status === GameStatus.PLAYING && time - this.beforeTime > 100) {
       const bullet = this.bullets.getFirstDead(true);
       if (bullet) {
         bullet.fire(this.plane);
         this.beforeTime = time;
       }
+      this.pi.play();
     }
     // console.log("this.bullets", this.bullets.getLength());
 
-    if (time - this.enemyBeforeTime > 500) {
+    if (
+      this.status === GameStatus.PLAYING &&
+      time - this.enemyBeforeTime > 500
+    ) {
       // Phaser提供的Math对象，Between表示两者之间的整数
       // api: https://photonstorm.github.io/phaser3-docs/Phaser.Math.html
       const enemyIndex = Math.Between(1, 3);

@@ -44,13 +44,13 @@ export default class Enemy extends Physics.Arcade.Sprite {
     }
   }
 
-  public destroy(): void {
-    if (this.active && this.visible) {
-      this.setActive(false);
-      this.setVisible(false);
-      this.scene.game.events.emit(EVENTS_NAME.shoot);
-    }
-  }
+  // public destroy(): void {
+  //   if (this.active && this.visible) {
+  //     this.setActive(false);
+  //     this.setVisible(false);
+  //     this.scene.game.events.emit(EVENTS_NAME.shoot);
+  //   }
+  // }
 
   private show() {
     this.setActive(true);

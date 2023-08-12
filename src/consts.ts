@@ -4,6 +4,7 @@ export enum EVENTS_NAME {
   chestLoot = "chest-loot",
   attack = "attack",
   shoot = "shoot",
+  planeAttack = "plane-attack",
 }
 
 export const LEVELS = [
@@ -20,4 +21,6 @@ export const LEVELS = [
 export enum GameStatus {
   WIN,
   LOSE,
+  PLAYING,
+  PAUSE,
 }
