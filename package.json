@@ -12,6 +12,7 @@
     "vite": "^2.9.0"
   },
   "dependencies": {
-    "phaser": "^3.60"
+    "phaser": "3.55.2",
+    "phaser3-rex-plugins": "^1.60.4"
   }
 }

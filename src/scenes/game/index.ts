@@ -37,22 +37,26 @@ export class GameScene extends Scene {
   }
 
   private gameStop(): void {
+    // this.physics.pause();
     this.status = GameStatus.PAUSE;
     this.bullets.getChildren().forEach((item) => {
-      console.log("item", item);
-      (item as Bullet).stop();
+      // console.log("item", item);
+      // item.kill();
+      (item as Bullet).destroy(true);
+      // item.
+    });
+    ["enemies1", "enemies2", "enemies3"].forEach((item) => {
+      (this as any)[item].getChildren().forEach((item: any) => {
+        item.destroy();
+      });
     });
     this.game.events.emit(EVENTS_NAME.gameStatus, GameStatus.PAUSE);
   }
 
   create(props: any): void {
-    this.game.events.on(
-      EVENTS_NAME.gameStatus,
-      (status: any) => {
-        this.status = status;
-      },
-      this
-    );
+    this.game.events.on(EVENTS_NAME.gameStatus, (status: any) => {
+      this.status = status;
+    });
 
     // const ao = this.sound.add("ao");
     // this.pi = this.sound.add("pi");
@@ -94,7 +98,9 @@ export class GameScene extends Scene {
         (this as any)[item],
         function (bullet, enemy) {
           bullet.destroy();
+          // bullet.disableBody(true, true);
           enemy.destroy();
+          // enemy.kill();
           // self.crash.play();
           self.game.events.emit(EVENTS_NAME.shoot);
         },
@@ -166,7 +172,7 @@ export class GameScene extends Scene {
     this.bg.tilePositionY -= 1;
 
     // this.plane.update();
-    if (this.status === GameStatus.PLAYING && time - this.beforeTime > 100) {
+    if (this.status === GameStatus.PLAYING && time - this.beforeTime > 300) {
       const bullet = this.bullets.getFirstDead(true);
       if (bullet) {
         bullet.fire(this.plane);

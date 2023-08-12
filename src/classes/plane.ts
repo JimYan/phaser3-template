@@ -1,5 +1,5 @@
 import { Physics } from "phaser";
-import { iSound } from "../app";
+import { iSound } from "../asdf";
 
 export default class Plane extends Physics.Arcade.Sprite {
   protected hp = 100;
@@ -31,6 +31,12 @@ export default class Plane extends Physics.Arcade.Sprite {
 
     // 飞机调用飞行动画
     this.anims.play("fly");
+    this.setRandomPosition(
+      0,
+      0,
+      scene.game.scale.width,
+      scene.game.scale.height
+    );
   }
 
   public start(delay = 1000) {

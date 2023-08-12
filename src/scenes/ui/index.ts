@@ -36,8 +36,8 @@ export class UIScene extends Scene {
     this.initListeners();
     this.add.image(width / 2, height - 16, "copyright").setScale(0.9);
 
-    this.backmusic = this.sound.add("playback");
-    this.backmusic.play({ loop: true, volume: 0.3 });
+    // this.backmusic = this.sound.add("playback");
+    // this.backmusic.play({ loop: true, volume: 0.3 });
   }
 
   shoot(): void {
@@ -49,12 +49,11 @@ export class UIScene extends Scene {
     const width = this.scale.width as number;
     const height = this.scale.height as number;
     if (status === GameStatus.PAUSE) {
-      this.backmusic.stop();
       const startButton = this.add
         .sprite(width / 2, height / 2, "startbutton", 1)
         .setInteractive()
         .on("pointerdown", () => {
-          this.backmusic.play({ loop: true, volume: 0.3 });
+          // this.backmusic.play({ loop: true, volume: 0.3 });
           this.game.events.emit(EVENTS_NAME.gameStatus, GameStatus.PLAYING);
           this.scene.start("game-scene", {
             name: "Level-1",

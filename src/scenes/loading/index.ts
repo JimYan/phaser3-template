@@ -179,6 +179,7 @@ export class LoadingScene extends Scene {
   }
 
   create(): void {
+    console.log(Phaser);
     const width = this.game.scale.width;
     const height = this.game.scale.height;
     this.add.image(0, 0, "bg").setOrigin(0, 0);

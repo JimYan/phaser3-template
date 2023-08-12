@@ -3,7 +3,7 @@ import { Math, Scene } from "phaser";
 import { EVENTS_NAME } from "../consts";
 import { Actor } from "./actor";
 import { Player } from "./player";
-import { iSound } from "../app";
+import { iSound } from "../asdf";
 
 enum Direction {
   UP,
