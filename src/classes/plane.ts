@@ -1,7 +1,9 @@
 import { Physics } from "phaser";
+import { iSound } from "../app";
 
 export default class Plane extends Physics.Arcade.Sprite {
   protected hp = 100;
+  private crash3!: iSound;
   //   private scene: Phaser.Scene;
   constructor(
     scene: Phaser.Scene,
@@ -24,6 +26,8 @@ export default class Plane extends Physics.Arcade.Sprite {
       frameRate: 10,
       repeat: -1,
     });
+
+    this.crash3 = scene.sound.add("crash3");
 
     // 飞机调用飞行动画
     this.anims.play("fly");
@@ -63,8 +67,9 @@ export default class Plane extends Physics.Arcade.Sprite {
     });
   }
 
-  public destroy(): void {
-    this.scene.physics.world.disableBody(this.body as Physics.Arcade.Body);
+  public attack(): void {
+    this.crash3.play();
+    // this.scene.physics.world.disableBody(this.body as Physics.Arcade.Body);
     super.destroy();
   }
 

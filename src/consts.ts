@@ -1,10 +1,12 @@
 export enum EVENTS_NAME {
   addPh = "app-pd",
-  gameEnd = "game-end",
+  // gameEnd = "game-end",
   chestLoot = "chest-loot",
   attack = "attack",
   shoot = "shoot",
   planeAttack = "plane-attack",
+  newBullet = "new-bullet",
+  gameStatus = "game-status",
 }
 
 export const LEVELS = [

@@ -42,27 +42,28 @@ export class GameScene extends Scene {
       console.log("item", item);
       (item as Bullet).stop();
     });
-    this.game.events.emit(EVENTS_NAME.gameEnd, GameStatus.PAUSE);
+    this.game.events.emit(EVENTS_NAME.gameStatus, GameStatus.PAUSE);
   }
 
   create(props: any): void {
     this.game.events.on(
-      EVENTS_NAME.gameEnd,
+      EVENTS_NAME.gameStatus,
       (status: any) => {
         this.status = status;
       },
       this
     );
 
-    const ao = this.sound.add("ao");
-    this.pi = this.sound.add("pi");
-    this.crash = this.sound.add("crash3");
+    // const ao = this.sound.add("ao");
+    // this.pi = this.sound.add("pi");
+    // this.crash = this.sound.add("crash3");
 
     const width = this.game.scale.width;
     const height = this.game.scale.height;
     // console.log("width", width);
     this.bg = this.add.tileSprite(0, 0, width, height, "bg").setOrigin(0, 0);
     this.plane = new Plane(this, width / 2 - 5, 100, "myplane");
+    // this.plane.
     // return;
 
     this.bullets = this.add.group({
@@ -94,7 +95,7 @@ export class GameScene extends Scene {
         function (bullet, enemy) {
           bullet.destroy();
           enemy.destroy();
-          self.crash.play();
+          // self.crash.play();
           self.game.events.emit(EVENTS_NAME.shoot);
         },
         undefined,
@@ -105,10 +106,10 @@ export class GameScene extends Scene {
         (this as any)[item],
         function (plane, enemy) {
           console.log("plane attach", plane);
-          plane.destroy();
+          self.plane.attack();
           self.gameStop();
           self.game.events.emit(EVENTS_NAME.planeAttack);
-          ao.play();
+          // ao.play();
           // bullet.destroy();
           // enemy.destroy();
         },
@@ -171,7 +172,7 @@ export class GameScene extends Scene {
         bullet.fire(this.plane);
         this.beforeTime = time;
       }
-      this.pi.play();
+      // this.pi.play();
     }
     // console.log("this.bullets", this.bullets.getLength());
 

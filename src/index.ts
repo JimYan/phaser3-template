@@ -1,6 +1,6 @@
 import { Game, Scale, Types, WEBGL, AUTO } from "phaser";
 
-import { GameScene, LoadingScene, UIScene } from "./scenes";
+import { GameScene, LoadingScene, UIScene, AudioScene } from "./scenes";
 
 type GameConfigExtended = Types.Core.GameConfig & {
   winScore: number;
@@ -37,7 +37,7 @@ export const gameConfig: GameConfigExtended = {
   audio: {
     disableWebAudio: false,
   },
-  scene: [LoadingScene, GameScene, UIScene],
+  scene: [LoadingScene, GameScene, UIScene, AudioScene],
   winScore: 100,
 };
 

@@ -223,5 +223,6 @@ export class LoadingScene extends Scene {
     this.scene.start("ui-scene", {
       name: "Level-1",
     });
+    this.scene.start("audio-scene");
   }
 }

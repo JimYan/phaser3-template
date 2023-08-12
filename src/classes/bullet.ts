@@ -1,13 +1,16 @@
-import { Physics } from "phaser";
+import { Physics, Sound } from "phaser";
 import Plane from "./plane";
-
+import { iSound } from "../app";
+import { EVENTS_NAME } from "../consts";
 export default class Bullet extends Physics.Arcade.Sprite {
   protected hp = 100;
   protected beforeTime = new Date().getTime();
   protected plane!: Plane;
+  protected pi!: iSound;
   //   private scene: Phaser.Scene;
   constructor(scene: Phaser.Scene) {
     super(scene, 0, 0, "mybullet");
+    this.pi = this.scene.sound.add("pi");
   }
 
   public fire(plane: Plane): void {
@@ -19,6 +22,8 @@ export default class Bullet extends Physics.Arcade.Sprite {
     this.scene.add.existing(this);
     this.scene.physics.add.existing(this);
     this.getBody().setVelocity(0, -300);
+    this.pi.play();
+    this.scene.game.events.emit(EVENTS_NAME.newBullet);
   }
 
   // public stop(): void {}

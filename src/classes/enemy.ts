@@ -3,6 +3,7 @@ import { Math, Scene } from "phaser";
 import { EVENTS_NAME } from "../consts";
 import { Actor } from "./actor";
 import { Player } from "./player";
+import { iSound } from "../app";
 
 enum Direction {
   UP,
@@ -27,6 +28,7 @@ export class Enemy extends Actor {
   private target: Player;
   private AGRESSOR_RADIUS = 100;
   private attackHandler: () => void;
+  private ao!: iSound;
 
   constructor(
     scene: Scene,
@@ -82,6 +84,7 @@ export class Enemy extends Actor {
       },
       loop: true,
     });
+    this.ao = this.scene.sound.add("ao");
   }
 
   destroy(fromScene?: boolean) {
