@@ -1,7 +1,4 @@
-import "phaser";
 import { Game, Scale, Types, WEBGL, AUTO } from "phaser";
-// import * as Phaser from "phaser";
-// import Phaser from "phaser/src/phaser.js";
 import SoundFadePlugin from "phaser3-rex-plugins/plugins/soundfade-plugin.js";
 
 import { GameScene, LoadingScene, UIScene, AudioScene } from "./scenes";

@@ -30,20 +30,21 @@ export class AudioScene extends Scene {
     if (status === GameStatus.PAUSE) {
       this.backmusic.stop();
     } else if (status === GameStatus.PLAYING) {
+      console.log("play");
       this.backmusic.play({ loop: true, volume: 0.3 });
     }
   }
 
   // 击中敌机
   shoot(): void {
-    SoundFade.fadeIn(this.pi, 3000);
-    // this.pi.play();
+    // SoundFade.fadeIn(this.pi, 3000);
+    this.pi.play();
   }
 
   // 被敌机击中
   attach(): void {
     this.crash3.play();
-    SoundFade.fadeIn(this.crash3, 3000);
+    // SoundFade.fadeIn(this.crash3, 3000);
     console.log("attach");
     // this.crash3.fadeIn(1000);
   }
@@ -56,7 +57,7 @@ export class AudioScene extends Scene {
   }
 
   private initListeners(): void {
-    this.game.events.once(EVENTS_NAME.gameStatus, this.gameEnd, this); // 游戏结束
+    this.game.events.on(EVENTS_NAME.gameStatus, this.gameEnd, this); // 游戏结束
     this.game.events.on(EVENTS_NAME.planeAttack, this.attach, this); // 被敌机击中
     this.game.events.on(EVENTS_NAME.shoot, this.shoot, this); // 击中敌机
     this.game.events.on(EVENTS_NAME.newBullet, this.newbullet, this); // 发射子弹
