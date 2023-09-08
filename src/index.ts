@@ -1,6 +1,9 @@
 import { Game, Scale, Types, WEBGL, AUTO } from "phaser";
+import * as Phaser from "phaser";
 import SoundFadePlugin from "phaser3-rex-plugins/plugins/soundfade-plugin.js";
 import "phaser/plugins/spine/dist/SpinePlugin";
+import * as spine from "@esotericsoftware/spine-phaser";
+
 // import "phaser/types/SpineContainer";
 
 import { GameScene, LoadingScene, UIScene, AudioScene } from "./scenes";
@@ -29,7 +32,9 @@ export const gameConfig: GameConfigExtended = {
       // },
       // ...
     ],
-    scene: [{ key: SpinePlugin.name, plugin: SpinePlugin, mapping: "spine" }],
+    scene: [
+      { key: "spine.SpinePlugin", plugin: spine.SpinePlugin, mapping: "spine" },
+    ],
   },
   scale: {
     mode: Scale.RESIZE,

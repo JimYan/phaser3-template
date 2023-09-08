@@ -1,3 +1,4 @@
+import { SpineGameObject } from "@esotericsoftware/spine-phaser";
 import { Scene } from "phaser";
 import * as Phaser from "phaser";
 // import assetsMap from "../../config/asset_map.json";
@@ -11,13 +12,14 @@ export class CatScene extends Scene {
   private fireTest!: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
   private fires!: Phaser.Physics.Arcade.Group;
   private bg!: Phaser.GameObjects.TileSprite;
+  private spineboy!: SpineGameObject;
   constructor() {
     super("cat-scene");
   }
 
   preload(): void {
     this.load.baseURL = "assets/";
-
+    // this.load.setPath("assets/");
     const asset: any = {};
     // this.load.image("bg", `bg.jpg`);
     // this.load.image("cat", `cat.jpg`);
@@ -45,6 +47,7 @@ export class CatScene extends Scene {
     //   frameWidth: 512,
     //   frameHeight: 512,
     // });
+
     this.load.atlas("firecom", "fire-com.png", "fire-com.json");
     this.load.atlas("test", "d/default_name.png", "d/default_name_atlas.json");
     this.load.tilemapTiledJSON("mapx", "map/cat3.json");
@@ -53,6 +56,11 @@ export class CatScene extends Scene {
     // this.load.atlas("dude", "dude/dude.png", "dude/dude.json");
 
     this.load.multiatlas("mt", "m/m.json", "m/");
+
+    // this.load.setBaseURL("");
+    // this.load.setPath("/spine/");
+    this.load.spineBinary("spineboy-data", "spineboy-pro.skel");
+    this.load.spineAtlas("spineboy-atlas", "spineboy-pma.atlas");
 
     // const percentText = this.make
     //   .text({
@@ -83,13 +91,11 @@ export class CatScene extends Scene {
     this.cursors = keyboard!.createCursorKeys();
 
     this.bg = this.add
-      .tileSprite(0, 0, width, height, "mt", "cat.png")
+      .tileSprite(0, 0, width, height, "dude", "sky.png")
       .setOrigin(0, 0)
       .setDisplaySize(width, height); // 加载背景图
     // const background = this.add.image(0, 0, "bg").setOrigin(0, 0);
     // background.setDisplaySize(width, height);
-
-    this.add.image(0, 0, "dude", "dude-0.png");
 
     // this.add.spine(400, 500, "set1.alien", "death", false).setScale(0.2);
     // this.add.spine(400, 200, "set1.dragon", "flying", true).setScale(0.4);
@@ -133,7 +139,12 @@ export class CatScene extends Scene {
     console.log(objectLayer);
 
     // const cat = this.add.image(-100, 0 - 16, "cat").setScale(0.1);
-    const cat = this.add.image(100, 100, "mt", "cat.png").setScale(0.1);
+    const cat = this.add
+      .image(100, 100, "mt", "cat.jpg")
+      .setScale(0.1)
+      .setFlipX(true)
+      .setFlipY(true);
+
     this.input.on(
       "pointerdown",
       function (pointer: Phaser.Input.Pointer) {
@@ -315,12 +326,29 @@ export class CatScene extends Scene {
         y: 10, // Y轴偏移量
       },
     });
+
+    this.spineboy = this.add
+      .spine(100, 100, "spineboy-data", "spineboy-atlas")
+      .setScale(0.1, 0.1);
+    // this.spineboy.scale = 0.1;
+    // this.spineboy.flipY = true;
+    // this.spineboy.
+    this.physics.add.existing(this.spineboy);
+    (this.spineboy.body as Phaser.Physics.Arcade.Body)
+      // .setVelocity(100, 200)
+      .setCollideWorldBounds(true)
+      .setBounce(0.2, 0.5);
+    // this.spineboy.animationState.
+    this.physics.add.collider(this.spineboy, clickLayer, (a, b) => {
+      console.log(a, b);
+    });
   }
 
   update(): void {
     // return;
     // this.bg.tilePositionY -= 1;
     this.dude?.setVelocity(0, 0);
+    (this.spineboy.body as Phaser.Physics.Arcade.Body).setVelocity(0, 0);
     // this.fireTest.play("fireAnimi", true);
     this.fires.playAnimation("fireAnimi", "1");
     // this.dude?.stop();
@@ -329,31 +357,60 @@ export class CatScene extends Scene {
         this.dude.play("left", true);
         // this.dude.body.velocity.x = -100;
         this.dude.setVelocityX(-100);
+        (this.spineboy.body as Phaser.Physics.Arcade.Body).setVelocityX(-100);
         this.fire?.followOffset.set(this.dude.width / 2, 10);
+        // this.spineboy.setFlip(true, true);
+        const current = this.spineboy.animationState.getCurrent(1);
+        if (current?.animation?.name != "run")
+          this.spineboy.animationState.setAnimation(1, "run", true);
+        // this.spineboy.toggleFlipX();
+        this.spineboy.setScale(-0.1, 0.1);
       }
     } else if (this.cursors?.right.isDown) {
       if (this.dude) {
         this.dude.play("right", true);
         // this.dude.body.velocity.x = 100;
         this.dude.setVelocityX(100);
+        const current = this.spineboy.animationState.getCurrent(1);
+        if (current?.animation?.name != "walk")
+          this.spineboy.animationState.setAnimation(1, "walk", true);
+
+        // (this.spineboy.animationState.getCurrent(1));
+        (this.spineboy.body as Phaser.Physics.Arcade.Body).setVelocityX(100);
         // this.fire?.followOffset.x = this.dude.width / 2;
         this.fire?.followOffset.set(-this.dude.width / 2, 10);
+        this.spineboy.setScale(0.1, 0.1);
         //   this.dude?.play("right", true);
         //   (this.dude as any).velocity.x = 10;
       }
+      // this.spineboy.setX(200);
     } else if (this.cursors?.down.isDown) {
       if (this.dude) {
         this.dude.play("turn", true);
         this.dude.setVelocityY(120); // = 120;
       }
+      const current = this.spineboy.animationState.getCurrent(1);
+      if (current?.animation?.name != "walk")
+        this.spineboy.animationState.setAnimation(1, "walk", true);
+
+      // (this.spineboy.animationState.getCurrent(1));
+      (this.spineboy.body as Phaser.Physics.Arcade.Body).setVelocityY(100);
     } else if (this.cursors?.up.isDown) {
       if (this.dude) {
         this.dude.play("turn", true);
         // this.dude.body.velocity.y = -120;
         this.dude.setVelocityY(-120);
       }
+      const current = this.spineboy.animationState.getCurrent(1);
+      if (current?.animation?.name != "walk")
+        this.spineboy.animationState.setAnimation(1, "walk", true);
+
+      // (this.spineboy.animationState.getCurrent(1));
+      (this.spineboy.body as Phaser.Physics.Arcade.Body).setVelocityY(-100);
     } else {
       this.dude?.play("turn");
+      // this.spineboy.animationState.timeScale = 0;
+      // this.spineboy.animationState.setAnimation(1, "walk");
     }
   }
 

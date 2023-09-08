@@ -1,6 +1,9 @@
 lockfileVersion: '6.0'
 
 dependencies:
+  '@esotericsoftware/spine-phaser':
+    specifier: ^4.2.21
+    version: 4.2.21
   phaser:
     specifier: 3.60.0
     version: 3.60.0
@@ -42,6 +45,30 @@ packages:
     requiresBuild: true
     dev: false
     optional: true
+
+  /@esotericsoftware/spine-canvas@4.2.21:
+    resolution: {integrity: sha512-BbGrmlBcQXGKkkSGr2AxbdGi/5OrwRm/pLk3cwrXIfhEJTNRx+B908RnsmscmEJfMOjDgM2eLhTk+B1GiAYAkQ==}
+    dependencies:
+      '@esotericsoftware/spine-core': 4.2.21
+    dev: false
+
+  /@esotericsoftware/spine-core@4.2.21:
+    resolution: {integrity: sha512-3vJUxn/0xeGPE+Rtmxm9U4OFaNlrrhAn1eg8wIRwII3cpjVgnmBWHkkc+ZBYBsyPB5k/t8qnYAYtZXKe1D9tpA==}
+    dev: false
+
+  /@esotericsoftware/spine-phaser@4.2.21:
+    resolution: {integrity: sha512-22cVT4VN0fwEMQWJU3qqXDvIFkXMhPVSJzl36Ng7FwFKhWfGcxzmfX4LKBcHKmnKgHTVmgycSshnG7c2x4i01g==}
+    dependencies:
+      '@esotericsoftware/spine-canvas': 4.2.21
+      '@esotericsoftware/spine-core': 4.2.21
+      '@esotericsoftware/spine-webgl': 4.2.21
+    dev: false
+
+  /@esotericsoftware/spine-webgl@4.2.21:
+    resolution: {integrity: sha512-cOl9i0nYgxoZT+PzqKFPd56LDAoY9YU4sIyTvd97phT5Ww1kVl/8fuU/FSe18OHQzCwsN9N174yO5kMJVOxljQ==}
+    dependencies:
+      '@esotericsoftware/spine-core': 4.2.21
+    dev: false
 
   /argparse@2.0.1:
     resolution: {integrity: sha512-8+9WqebbFzpX9OR+Wa6O29asIogeRMzcGtAINdpMHHyAg10f05aSFVBbcEqGf/PXw1EjAZ+q2/bEBg3DvurK3Q==}

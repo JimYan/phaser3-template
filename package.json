@@ -12,6 +12,7 @@
     "typescript": "^4.5.4"
   },
   "dependencies": {
+    "@esotericsoftware/spine-phaser": "^4.2.21",
     "phaser": "3.60.0",
     "phaser3-rex-plugins": "^1.60.4",
     "vite": "^3.1.0"
