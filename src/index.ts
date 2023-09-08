@@ -1,7 +1,10 @@
 import { Game, Scale, Types, WEBGL, AUTO } from "phaser";
 import SoundFadePlugin from "phaser3-rex-plugins/plugins/soundfade-plugin.js";
+import "phaser/plugins/spine/dist/SpinePlugin";
+// import "phaser/types/SpineContainer";
 
 import { GameScene, LoadingScene, UIScene, AudioScene } from "./scenes";
+import { CatScene } from "./scenes/cat";
 import { DemoScene } from "./scenes/demo";
 
 type GameConfigExtended = Phaser.Types.Core.GameConfig & {
@@ -26,6 +29,7 @@ export const gameConfig: GameConfigExtended = {
       // },
       // ...
     ],
+    scene: [{ key: SpinePlugin.name, plugin: SpinePlugin, mapping: "spine" }],
   },
   scale: {
     mode: Scale.RESIZE,
@@ -55,7 +59,8 @@ export const gameConfig: GameConfigExtended = {
     disableWebAudio: false,
   },
   // scene: [DemoScene],
-  scene: [LoadingScene, GameScene, UIScene, AudioScene],
+  // scene: [LoadingScene, GameScene, UIScene, AudioScene],
+  scene: [CatScene],
   winScore: 100,
 };
 

@@ -1,0 +1,62 @@
+{
+	"textures": [
+		{
+			"image": "fire-com.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 412,
+				"h": 998
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "fire.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 512,
+						"h": 512
+					},
+					"spriteSourceSize": {
+						"x": 51,
+						"y": 0,
+						"w": 410,
+						"h": 512
+					},
+					"frame": {
+						"x": 1,
+						"y": 1,
+						"w": 410,
+						"h": 512
+					}
+				},
+				{
+					"filename": "fire-3.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 512,
+						"h": 512
+					},
+					"spriteSourceSize": {
+						"x": 75,
+						"y": 15,
+						"w": 362,
+						"h": 482
+					},
+					"frame": {
+						"x": 1,
+						"y": 515,
+						"w": 362,
+						"h": 482
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:82872eafafb0cdacd61c3e902c1782bd:d86a3ef7c93d7550a6ecd90719fdb627:99531b56e29b436e79b42e7891c8cd74$"
+	}
+}

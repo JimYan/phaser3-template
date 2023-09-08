@@ -1,0 +1,57 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "",
+    "expandedProjectPaths": [
+    ],
+    "file.lastUsedOpenFilter": "全部文件 (*)",
+    "fileStates": {
+        "/Users/jimyan/my/project/game/plan/public/assets/tilemaps/json/Grass.tmx": {
+            "scale": 0.35684374999999996,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 800.0700586741398,
+                "y": 801.4712321569314
+            }
+        },
+        "/Users/jimyan/my/project/game/plan/public/assets/tilemaps/json/Grass.tmx#Grass": {
+            "scaleInDock": 1
+        },
+        "cat2.tmx": {
+            "expandedObjectLayers": [
+                6
+            ],
+            "scale": 0.5947395833333333,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 480.04203520448374,
+                "y": 317.7861458971889
+            }
+        },
+        "未命名.tmx": {
+            "scale": 0.67984375,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 417.00758446334174,
+                "y": 320.6619168007355
+            }
+        },
+        "未命名.tmx#bg": {
+            "scaleInDock": 1
+        }
+    },
+    "last.exportedFilePath": "/Users/jimyan/my/project/game/plan/public/assets/map",
+    "last.imagePath": "/Users/jimyan/my/project/game/plan/public/assets/map",
+    "map.lastUsedExportFilter": "JSON map files (*.tmj *.json)",
+    "map.lastUsedFormat": "tmx",
+    "openFiles": [
+    ],
+    "project": "cat.tiled-project",
+    "property.type": "bool",
+    "recentFiles": [
+    ],
+    "tileset.embedInMap": true,
+    "tileset.lastUsedFormat": "tsx"
+}

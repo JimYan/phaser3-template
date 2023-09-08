@@ -1,0 +1,230 @@
+{
+	"textures": [
+		{
+			"image": "dude.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 800,
+				"h": 648
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "dude-0.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 32,
+						"h": 48
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 32,
+						"h": 48
+					},
+					"frame": {
+						"x": 0,
+						"y": 0,
+						"w": 32,
+						"h": 48
+					}
+				},
+				{
+					"filename": "dude-1.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 32,
+						"h": 48
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 32,
+						"h": 48
+					},
+					"frame": {
+						"x": 32,
+						"y": 0,
+						"w": 32,
+						"h": 48
+					}
+				},
+				{
+					"filename": "dude-2.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 32,
+						"h": 48
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 32,
+						"h": 48
+					},
+					"frame": {
+						"x": 64,
+						"y": 0,
+						"w": 32,
+						"h": 48
+					}
+				},
+				{
+					"filename": "dude-3.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 32,
+						"h": 48
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 32,
+						"h": 48
+					},
+					"frame": {
+						"x": 96,
+						"y": 0,
+						"w": 32,
+						"h": 48
+					}
+				},
+				{
+					"filename": "dude-4.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 32,
+						"h": 48
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 32,
+						"h": 48
+					},
+					"frame": {
+						"x": 128,
+						"y": 0,
+						"w": 32,
+						"h": 48
+					}
+				},
+				{
+					"filename": "dude-5.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 32,
+						"h": 48
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 32,
+						"h": 48
+					},
+					"frame": {
+						"x": 160,
+						"y": 0,
+						"w": 32,
+						"h": 48
+					}
+				},
+				{
+					"filename": "dude-6.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 32,
+						"h": 48
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 32,
+						"h": 48
+					},
+					"frame": {
+						"x": 192,
+						"y": 0,
+						"w": 32,
+						"h": 48
+					}
+				},
+				{
+					"filename": "dude-7.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 32,
+						"h": 48
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 32,
+						"h": 48
+					},
+					"frame": {
+						"x": 224,
+						"y": 0,
+						"w": 32,
+						"h": 48
+					}
+				},
+				{
+					"filename": "dude-8.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 32,
+						"h": 48
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 32,
+						"h": 48
+					},
+					"frame": {
+						"x": 256,
+						"y": 0,
+						"w": 32,
+						"h": 48
+					}
+				},
+				{
+					"filename": "sky.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 800,
+						"h": 600
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 800,
+						"h": 600
+					},
+					"frame": {
+						"x": 0,
+						"y": 48,
+						"w": 800,
+						"h": 600
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:720aa07d62aef5b808819839f4514422:abb1533e604d3d295476252d20a6481b:91b0136f103a2ad004f02a846859646f$"
+	}
+}
