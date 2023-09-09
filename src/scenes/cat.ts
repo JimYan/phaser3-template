@@ -90,12 +90,12 @@ export class CatScene extends Scene {
     const keyboard = this.input.keyboard;
     this.cursors = keyboard!.createCursorKeys();
 
-    this.bg = this.add
-      .tileSprite(0, 0, width, height, "dude", "sky.png")
-      .setOrigin(0, 0)
-      .setDisplaySize(width, height); // 加载背景图
-    // const background = this.add.image(0, 0, "bg").setOrigin(0, 0);
-    // background.setDisplaySize(width, height);
+    // this.bg = this.add
+    //   .image(0, 0, width, height, "dude", "sky.png")
+    //   .setOrigin(0, 0)
+    //   .setDisplaySize(width, height); // 加载背景图
+    const background = this.add.image(0, 0, "dude", "sky.png").setOrigin(0, 0);
+    background.setDisplaySize(width, height);
 
     // this.add.spine(400, 500, "set1.alien", "death", false).setScale(0.2);
     // this.add.spine(400, 200, "set1.dragon", "flying", true).setScale(0.4);
@@ -112,12 +112,12 @@ export class CatScene extends Scene {
     //   0
     // ) as Phaser.Tilemaps.TilemapLayer; // 创建图层bg1 bg1是Tiled中定义的图层名称 tileset是上面加载的图块集key
 
-    const clickLayer2 = map.createLayer(
-      "bg4",
-      tileset as any,
-      0,
-      0
-    ) as Phaser.Tilemaps.TilemapLayer; // 创建bg4 bg4的作用用来展示一些钻饰品 bg4是Tiled中定义的图层名称 tileset是上面加载的图块集key
+    // const clickLayer2 = map.createLayer(
+    //   "bg4",
+    //   tileset as any,
+    //   0,
+    //   0
+    // ) as Phaser.Tilemaps.TilemapLayer; // 创建bg4 bg4的作用用来展示一些钻饰品 bg4是Tiled中定义的图层名称 tileset是上面加载的图块集key
 
     const clickLayer = map.createLayer(
       "bg3",
@@ -139,11 +139,9 @@ export class CatScene extends Scene {
     console.log(objectLayer);
 
     // const cat = this.add.image(-100, 0 - 16, "cat").setScale(0.1);
-    const cat = this.add
-      .image(100, 100, "mt", "cat.jpg")
-      .setScale(0.1)
-      .setFlipX(true)
-      .setFlipY(true);
+    const cat = this.add.image(-100, -100, "mt", "cat.jpg").setScale(0.1);
+    // .setFlipX(true)
+    // .setFlipY(true);
 
     this.input.on(
       "pointerdown",
@@ -222,11 +220,13 @@ export class CatScene extends Scene {
       // cat.x = touchX;
       // cat.y = touchY;
     );
-
+    // console.log(objectLayer);
+    const start = objectLayer.objects.filter((obj) => obj.name === "start")[0];
+    const [x, y] = [start.x, start.y] as [number, number];
     // 创建dude的sprite，主要的玩家
     this.dude = this.physics.add
       //   .sprite(10, 100, "dude", "dude-4.png")
-      .sprite(10, 100, "mt", "dude-4.png")
+      .sprite(x, y, "mt", "dude-4.png")
       .setScale(0.5, 0.5) // 设置缩放
       //   .setBounce(0.2, 0.2) //设置碰撞
       .setCollideWorldBounds(true);
@@ -342,35 +342,36 @@ export class CatScene extends Scene {
     this.physics.add.collider(this.spineboy, clickLayer, (a, b) => {
       console.log(a, b);
     });
+    // this.physics
   }
 
   update(): void {
     // return;
     // this.bg.tilePositionY -= 1;
     this.dude?.setVelocity(0, 0);
+    const dudeSpeed = 150;
     (this.spineboy.body as Phaser.Physics.Arcade.Body).setVelocity(0, 0);
     // this.fireTest.play("fireAnimi", true);
     this.fires.playAnimation("fireAnimi", "1");
     // this.dude?.stop();
-    if (this.cursors?.left.isDown) {
+    if (this.cursors.left.isDown) {
       if (this.dude && this.dude.body) {
         this.dude.play("left", true);
         // this.dude.body.velocity.x = -100;
-        this.dude.setVelocityX(-100);
+        this.dude.setVelocityX(0 - dudeSpeed);
         (this.spineboy.body as Phaser.Physics.Arcade.Body).setVelocityX(-100);
-        this.fire?.followOffset.set(this.dude.width / 2, 10);
-        // this.spineboy.setFlip(true, true);
-        const current = this.spineboy.animationState.getCurrent(1);
-        if (current?.animation?.name != "run")
-          this.spineboy.animationState.setAnimation(1, "run", true);
-        // this.spineboy.toggleFlipX();
+        this.fire.followOffset.set(this.dude.width / 2, 10);
         this.spineboy.setScale(-0.1, 0.1);
+        const current = this.spineboy.animationState.getCurrent(1);
+        if (current?.animation?.name != "walk")
+          this.spineboy.animationState.setAnimation(1, "walk", true);
+        // this.spineboy.toggleFlipX();
       }
     } else if (this.cursors?.right.isDown) {
       if (this.dude) {
         this.dude.play("right", true);
         // this.dude.body.velocity.x = 100;
-        this.dude.setVelocityX(100);
+        this.dude.setVelocityX(dudeSpeed);
         const current = this.spineboy.animationState.getCurrent(1);
         if (current?.animation?.name != "walk")
           this.spineboy.animationState.setAnimation(1, "walk", true);
@@ -387,7 +388,7 @@ export class CatScene extends Scene {
     } else if (this.cursors?.down.isDown) {
       if (this.dude) {
         this.dude.play("turn", true);
-        this.dude.setVelocityY(120); // = 120;
+        this.dude.setVelocityY(dudeSpeed); // = 120;
       }
       const current = this.spineboy.animationState.getCurrent(1);
       if (current?.animation?.name != "walk")
@@ -399,7 +400,7 @@ export class CatScene extends Scene {
       if (this.dude) {
         this.dude.play("turn", true);
         // this.dude.body.velocity.y = -120;
-        this.dude.setVelocityY(-120);
+        this.dude.setVelocityY(-dudeSpeed);
       }
       const current = this.spineboy.animationState.getCurrent(1);
       if (current?.animation?.name != "walk")
