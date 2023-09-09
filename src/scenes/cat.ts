@@ -1,4 +1,4 @@
-import { SpineGameObject } from "@esotericsoftware/spine-phaser";
+import { SpineGameObject, SpinePlugin } from "@esotericsoftware/spine-phaser";
 import { Scene } from "phaser";
 import * as Phaser from "phaser";
 // import assetsMap from "../../config/asset_map.json";
@@ -286,14 +286,17 @@ export class CatScene extends Scene {
     // this.dude.setCollideWorldBounds(true);
     // this.dude.setGravity(0, 0);
     // this.dude.setBounce(0.8, 0.8);
-
+    const self = this;
     this.physics.add.overlap(this.dude, fires, (a, b) => {
+      a.destroy();
+      self.physics.pause();
       console.log(a, b);
     });
 
     this.physics.add.overlap(this.dude, stars, (a, b) => {
       console.log("star");
-      console.log(a, b);
+      // console.log(a, b);
+      b.destroy();
     });
 
     // const inputElement = document.getElementById("input-box") as HTMLElement;
@@ -346,72 +349,86 @@ export class CatScene extends Scene {
   }
 
   update(): void {
-    // return;
-    // this.bg.tilePositionY -= 1;
-    this.dude?.setVelocity(0, 0);
-    const dudeSpeed = 150;
-    (this.spineboy.body as Phaser.Physics.Arcade.Body).setVelocity(0, 0);
-    // this.fireTest.play("fireAnimi", true);
     this.fires.playAnimation("fireAnimi", "1");
-    // this.dude?.stop();
     if (this.cursors.left.isDown) {
-      if (this.dude && this.dude.body) {
-        this.dude.play("left", true);
-        // this.dude.body.velocity.x = -100;
-        this.dude.setVelocityX(0 - dudeSpeed);
-        (this.spineboy.body as Phaser.Physics.Arcade.Body).setVelocityX(-100);
-        this.fire.followOffset.set(this.dude.width / 2, 10);
-        this.spineboy.setScale(-0.1, 0.1);
-        const current = this.spineboy.animationState.getCurrent(1);
-        if (current?.animation?.name != "walk")
-          this.spineboy.animationState.setAnimation(1, "walk", true);
-        // this.spineboy.toggleFlipX();
-      }
+      this.dudeUpdate("left");
+      this.spineBoyUpdate("left");
     } else if (this.cursors?.right.isDown) {
-      if (this.dude) {
-        this.dude.play("right", true);
-        // this.dude.body.velocity.x = 100;
-        this.dude.setVelocityX(dudeSpeed);
-        const current = this.spineboy.animationState.getCurrent(1);
+      this.dudeUpdate("right");
+      this.spineBoyUpdate("right");
+    } else if (this.cursors?.down.isDown) {
+      this.dudeUpdate("down");
+      this.spineBoyUpdate("down");
+    } else if (this.cursors?.up.isDown) {
+      this.dudeUpdate("up");
+      this.spineBoyUpdate("up");
+    } else {
+      this.dudeUpdate(null);
+    }
+  }
+
+  dudeUpdate(lurd: "left" | "right" | "down" | "up" | null): void {
+    if (!this.dude) {
+      return;
+    }
+    const dudeSpeed = 200;
+
+    try {
+      this.dude.setVelocity(0, 0);
+
+      switch (lurd) {
+        case "left":
+          this.dude.play("left", true);
+          this.dude.setVelocityX(0 - dudeSpeed);
+          this.fire.followOffset.set(this.dude.width / 2, 10);
+          break;
+        case "right":
+          this.dude.play("right", true);
+          this.dude.setVelocityX(dudeSpeed);
+          this.fire?.followOffset.set(-this.dude.width / 2, 10);
+          break;
+        case "down":
+          this.dude.play("turn", true);
+          this.dude.setVelocityY(dudeSpeed); // = 120;
+          break;
+        case "up":
+          this.dude.play("turn", true);
+          this.dude.setVelocityY(-dudeSpeed);
+          break;
+        default:
+          this.dude.play("turn", true);
+      }
+    } catch (e) {}
+  }
+
+  spineBoyUpdate(lurd: "left" | "right" | "down" | "up" | null) {
+    const body = this.spineboy.body as Phaser.Physics.Arcade.Body;
+    body.setVelocity(0, 0);
+    const current = this.spineboy.animationState.getCurrent(1);
+    const [scaleX, scaleY] = [0.1, 0.1];
+    const speed = 100;
+    switch (lurd) {
+      case "left":
+        body.setVelocityX(-speed);
+        this.spineboy.setScale(-scaleX, scaleY);
+        if (current?.animation?.name != "walk")
+          this.spineboy.animationState.setAnimation(1, "walk", true);
+        break;
+      case "right":
+        if (current?.animation?.name != "walk")
+          this.spineboy.animationState.setAnimation(1, "walk", true);
+        body.setVelocityX(speed);
+        this.spineboy.setScale(scaleX, scaleY);
+        break;
+      case "down":
         if (current?.animation?.name != "walk")
           this.spineboy.animationState.setAnimation(1, "walk", true);
 
-        // (this.spineboy.animationState.getCurrent(1));
-        (this.spineboy.body as Phaser.Physics.Arcade.Body).setVelocityX(100);
-        // this.fire?.followOffset.x = this.dude.width / 2;
-        this.fire?.followOffset.set(-this.dude.width / 2, 10);
-        this.spineboy.setScale(0.1, 0.1);
-        //   this.dude?.play("right", true);
-        //   (this.dude as any).velocity.x = 10;
-      }
-      // this.spineboy.setX(200);
-    } else if (this.cursors?.down.isDown) {
-      if (this.dude) {
-        this.dude.play("turn", true);
-        this.dude.setVelocityY(dudeSpeed); // = 120;
-      }
-      const current = this.spineboy.animationState.getCurrent(1);
-      if (current?.animation?.name != "walk")
-        this.spineboy.animationState.setAnimation(1, "walk", true);
-
-      // (this.spineboy.animationState.getCurrent(1));
-      (this.spineboy.body as Phaser.Physics.Arcade.Body).setVelocityY(100);
-    } else if (this.cursors?.up.isDown) {
-      if (this.dude) {
-        this.dude.play("turn", true);
-        // this.dude.body.velocity.y = -120;
-        this.dude.setVelocityY(-dudeSpeed);
-      }
-      const current = this.spineboy.animationState.getCurrent(1);
-      if (current?.animation?.name != "walk")
-        this.spineboy.animationState.setAnimation(1, "walk", true);
-
-      // (this.spineboy.animationState.getCurrent(1));
-      (this.spineboy.body as Phaser.Physics.Arcade.Body).setVelocityY(-100);
-    } else {
-      this.dude?.play("turn");
-      // this.spineboy.animationState.timeScale = 0;
-      // this.spineboy.animationState.setAnimation(1, "walk");
+        body.setVelocityY(speed);
+        break;
+      case "up":
+        body.setVelocityY(-speed);
+        break;
     }
   }
 
