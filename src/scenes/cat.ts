@@ -1,6 +1,7 @@
 import { SpineGameObject, SpinePlugin } from "@esotericsoftware/spine-phaser";
 import { Scene } from "phaser";
 import * as Phaser from "phaser";
+import CountdownText from "../classes/CountdownText";
 // import assetsMap from "../../config/asset_map.json";
 // import Plane from "../../classes/plane";
 
@@ -97,6 +98,9 @@ export class CatScene extends Scene {
     const background = this.add.image(0, 0, "dude", "sky.png").setOrigin(0, 0);
     background.setDisplaySize(width, height);
 
+    const countdownText = new CountdownText(this, width / 2, height / 2);
+    this.add.existing(countdownText);
+
     // this.add.spine(400, 500, "set1.alien", "death", false).setScale(0.2);
     // this.add.spine(400, 200, "set1.dragon", "flying", true).setScale(0.4);
     // this.add.spine(400, 600, "set1.spineboy", "idle", true).setScale(0.4);
@@ -139,7 +143,40 @@ export class CatScene extends Scene {
     console.log(objectLayer);
 
     // const cat = this.add.image(-100, 0 - 16, "cat").setScale(0.1);
-    const cat = this.add.image(-100, -100, "mt", "cat.jpg").setScale(0.1);
+    const cat = this.physics.add
+      .image(-100, -100, "mt", "cat.jpg")
+      .setScale(0.1);
+    cat.setInteractive;
+
+    // const chain = this.tweens.chain({
+    //   targets: cat,
+    //   tweens: [
+    //     {
+    //       x: 400,
+    //       ease: "power3",
+    //       duration: 750,
+    //     },
+    //     {
+    //       angle: 0,
+    //       ease: "elastic.out",
+    //       duration: 500,
+    //     },
+    //     {
+    //       scale: { value: 0.1, duration: 1000 },
+    //       y: { value: 100, duration: 750, ease: "sine.in" },
+    //     },
+    //     {
+    //       angle: 35,
+    //       ease: "power2",
+    //       duration: 200,
+    //     },
+    //     {
+    //       x: -100,
+    //       ease: "quart.in",
+    //       duration: 1000,
+    //     },
+    //   ],
+    // });
     // .setFlipX(true)
     // .setFlipY(true);
 
@@ -171,6 +208,7 @@ export class CatScene extends Scene {
               worldY <= objY + objHeight
             ) {
               // 点击了对象，执行相应操作
+              countdownText.restart();
               console.log("点击了对象");
               // 执行你的操作逻辑
             }
